@@ -23,13 +23,14 @@
         android:id="@+id/button_add_shop_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/cool_orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="Add new shop item"
+        android:contentDescription="@string/add_new_shop_item"
         app:srcCompat="@drawable/baseline_add_24"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
