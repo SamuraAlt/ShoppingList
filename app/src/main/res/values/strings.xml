@@ -4,4 +4,6 @@
     <string name="count">Count:</string>
     <string name="save">Save</string>
     <string name="add_new_shop_item">Add new shop item</string>
+    <string name="error_input_name">invalid name</string>
+    <string name="error_input_count">invalid count</string>
 </resources>
