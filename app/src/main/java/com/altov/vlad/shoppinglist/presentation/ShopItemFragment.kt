@@ -1,9 +1,9 @@
 package com.altov.vlad.shoppinglist.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +19,7 @@ class ShopItemFragment : Fragment() {
     private lateinit var binding:FragmentShopItemBinding
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
+    private lateinit var onEditingFinishedListener:OnEditingFinishedListener
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +30,6 @@ class ShopItemFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("ShopItemFragment","onCreate")
         super.onCreate(savedInstanceState)
         parsParams()
     }
@@ -41,6 +41,15 @@ class ShopItemFragment : Fragment() {
         addTextChangeListeners()
         launchRightMode()
         observeViewModel()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is OnEditingFinishedListener){
+            onEditingFinishedListener = context
+        }else{
+            throw RuntimeException("Activity must implement OnEditingFinishedListener")
+        }
     }
 
 
@@ -66,7 +75,7 @@ class ShopItemFragment : Fragment() {
 
 
         viewModel.activityReadyToClose.observe(viewLifecycleOwner) {
-            activity?.onBackPressedDispatcher?.onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
 
         }
     }
@@ -153,6 +162,9 @@ class ShopItemFragment : Fragment() {
             }
             shopItemId = args.getInt(SHOP_ITEM_ID,ShopItem.UNDEFINED_ID)
         }
+    }
+    interface OnEditingFinishedListener{
+        fun onEditingFinished()
     }
 
     companion object {
